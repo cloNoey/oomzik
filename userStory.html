@@ -1,0 +1,512 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댄스 매칭 플랫폼 유저 스토리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .user-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .user-group {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .user-group:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-group h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-group h2::before {
+            content: "👤";
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .dancer h2::before {
+            content: "💃";
+        }
+
+        .client h2::before {
+            content: "🏢";
+        }
+
+        .student h2::before {
+            content: "🎓";
+        }
+
+        .feature-category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .feature-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .flow-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .flow-diagram h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .flow-step {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .step-number {
+            background: rgba(255,255,255,0.3);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+
+        .technical-overview {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .tech-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .user-groups {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-groups {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .flow-step:not(:last-child)::after {
+                content: "↓";
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>댄서 매칭 플랫폼</h1>
+            <p>댄서와 클라이언트를 연결하는 종합 플랫폼</p>
+        </div>
+
+        <div class="user-groups">
+            <div class="user-group dancer">
+                <h2>댄서 (Dance Instructor)</h2>
+                
+                <div class="feature-category">
+                    <div class="category-title">🔐 계정 관리</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">회원가입/로그인</div>
+                            <div class="feature-desc">소셜 로그인 연동, 프로필 설정 및 관리</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">📚 수업 관리</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 개설 요청</div>
+                            <div class="feature-desc">시간, 장소, 장르별 수업 개설 및 학생 모집</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">수업 일정 관리</div>
+                            <div class="feature-desc">달력 기반 일정 확인, 변경 및 취소</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">💬 소통 및 리뷰</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">학생과의 소통</div>
+                            <div class="feature-desc">실시간 채팅, 공지사항 전송</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">수업 리뷰 관리</div>
+                            <div class="feature-desc">학생 리뷰 확인 및 답변</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">💰 수익 및 포트폴리오</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 수익 확인</div>
+                            <div class="feature-desc">수업별 수익 현황 및 결제 내역 관리</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">포트폴리오 관리</div>
+                            <div class="feature-desc">댄스 영상, 사진 업로드 및 관리</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">🎭 기회 탐색</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">경기/공연 제안 관리</div>
+                            <div class="feature-desc">공연 및 대회 정보 확인, 참가 신청</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="user-group client">
+                <h2>클라이언트 (Class Requester)</h2>
+                
+                <div class="feature-category">
+                    <div class="category-title">📋 수업 요청</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 요청</div>
+                            <div class="feature-desc">장르, 시간대별 맞춤 수업 요청</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">🔍 댄서 탐색</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 제안 받기</div>
+                            <div class="feature-desc">댄서들의 수업 제안 확인 및 선택</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">수업 매칭 및 확인</div>
+                            <div class="feature-desc">댄서 포트폴리오 확인 및 계약 진행</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="user-group student">
+                <h2>학생 (Individual Student)</h2>
+                
+                <div class="feature-category">
+                    <div class="category-title">🔐 계정 관리</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">회원가입/로그인</div>
+                            <div class="feature-desc">개인정보 등록, 선호 장르 설정</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">🔍 수업 탐색</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 검색 및 조회</div>
+                            <div class="feature-desc">장르, 지역, 시간별 수업 검색</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">댄서 프로필 확인</div>
+                            <div class="feature-desc">댄서 포트폴리오, 리뷰, 경력 확인</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">📚 수업 수강</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">수업 신청 및 결제</div>
+                            <div class="feature-desc">원하는 수업 신청, 온라인 결제</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">수강 이력 관리</div>
+                            <div class="feature-desc">수강한 수업 기록, 출석 현황 확인</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">💬 소통 및 피드백</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">댄서와의 소통</div>
+                            <div class="feature-desc">수업 문의, 실시간 채팅</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">리뷰 작성</div>
+                            <div class="feature-desc">수업 후 평점 및 후기 작성</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-category">
+                    <div class="category-title">🎯 개인화 서비스</div>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-title">맞춤 수업 추천</div>
+                            <div class="feature-desc">선호도 기반 수업 추천</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">일정 관리</div>
+                            <div class="feature-desc">수강 일정 확인, 알림 설정</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-diagram">
+            <h3>🔄 플랫폼 매칭 플로우</h3>
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #667eea; margin-bottom: 15px;">📋 수업 요청 방식 (클라이언트 → 댄서)</h4>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <strong>클라이언트</strong><br>
+                        수업 요청 게시
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <strong>댄서</strong><br>
+                        요청 확인 및 제안
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <strong>매칭</strong><br>
+                        상호 협의 및 확정
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <strong>수업 진행</strong><br>
+                        일정 관리 및 소통
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <strong>완료</strong><br>
+                        리뷰 및 결제
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 style="color: #667eea; margin-bottom: 15px;">📚 직접 수업 신청 방식 (학생 → 댄서)</h4>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <strong>댄서</strong><br>
+                        수업 개설 및 공개
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <strong>학생</strong><br>
+                        수업 검색 및 선택
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <strong>등록</strong><br>
+                        수업 신청 및 결제
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <strong>수업 참여</strong><br>
+                        출석 체크 및 학습
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">5</div>
+                        <strong>피드백</strong><br>
+                        리뷰 작성
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="technical-overview">
+            <h3 style="color: #667eea; margin-bottom: 20px; text-align: center;">📊 기술적 구현 포인트</h3>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>🔐 사용자 관리</h4>
+                    <p>멀티 로그인 지원, 역할 기반 권한 관리, 소셜 로그인 연동</p>
+                </div>
+                <div class="tech-item">
+                    <h4>💬 실시간 소통</h4>
+                    <p>WebSocket 기반 채팅, 알림 시스템, 메시지 히스토리</p>
+                </div>
+                <div class="tech-item">
+                    <h4>📅 일정 관리</h4>
+                    <p>캘린더 인터페이스, 반복 일정 지원, 자동 알림</p>
+                </div>
+                <div class="tech-item">
+                    <h4>💳 결제 시스템</h4>
+                    <p>다중 결제 수단, 수수료 관리, 환불 처리</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🔍 검색 및 매칭</h4>
+                    <p>지역/장르 필터링, 평점 시스템, 추천 알고리즘</p>
+                </div>
+                <div class="tech-item">
+                    <h4>🎯 개인화 추천</h4>
+                    <p>머신러닝 기반 수업 추천, 선호도 분석, 맞춤형 콘텐츠</p>
+                </div>
+                <div class="tech-item">
+                    <h4>📊 수강 관리</h4>
+                    <p>출석 체크, 진도 관리, 성취도 추적</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
